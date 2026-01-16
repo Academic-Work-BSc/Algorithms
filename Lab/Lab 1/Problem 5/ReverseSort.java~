@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+public class ReverseSort
+{
+    public static void main (String [] args)
+    {
+        Scanner sc = new Scanner (System.in);
+        int N = sc.nextInt();
+        sc.nextLine();
+
+        String nums = sc.nextLine();
+
+        String[] arr1 = nums.split (" ");
+
+        int[] arr = new int[arr1.length];
+
+        for (int i = 0; i < arr.length; i++)
+        {
+            arr[i] = Integer.parseInt (arr1[i]);
+        }
+        ArrayList <int[]> steps = new ArrayList<>();
+        
+        for (int i = 0; i < arr.length; i++)
+        {
+          int minindex = i;
+          for (int j = i + 1; j < arr.length; j++)
+          {
+            if (arr[j] < arr[minindex])
+            {
+              minindex = j;
+            }
+          }
+          if ((minindex - i) % 2 != 0) 
+          {
+            System.out.println("NO");
+            return;
+          }
+          while (minindex - i >= 2)
+          {
+            int temp = arr[minindex];
+            arr[minindex] = arr[minindex-2];
+            arr[minindex-2] = temp;
+            steps.add (new int[] {minindex - 1, minindex + 1});
+            minindex = minindex - 2;
+          }
+        }
+        for (int i = 0; i < arr.length - 1; i++)
+        {
+          for (int j = i + 1; j< arr.length; j++)
+          {
+            if (arr[i] > arr[j])
+            {
+              System.out.println ("NO");
+              return;
+            }
+          }
+        }
+        System.out.println ("YES");
+        System.out.println (steps.size());
+        for (int i = 0; i < steps.size(); i++)
+        {
+          int [] elem = steps.get(i);
+          System.out.println(elem[0] + " " + elem[1]);
+        } 
+    }
+}
